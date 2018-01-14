@@ -1,6 +1,16 @@
 """
 Look up a name in a set of named world map locations JSON files,
 and show the city/region/country and current time
+
+JSON files go in data/*.json, and are lists of records like:
+
+[{"city": "Vancouver",
+  "cty": "CA",
+  "lat": 49.2827,
+  "lng": -123.1207,
+  "nm": "an awesome place"},
+ ...
+]
 """
 import argparse
 import json
@@ -59,13 +69,6 @@ class GeoData(object):
 
     def get_entries_for_name(self, name):
         return self.entries_by_name[name]
-
-
-# {u'city': u'Vancouver',
-#  u'cty': u'CA',
-#  u'lat': 49.2827,
-#  u'lng': -123.1207,
-#  u'nm': u'an awesome place'}
 
 
 def parse_args():
