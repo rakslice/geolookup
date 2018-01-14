@@ -159,10 +159,27 @@ def main():
             else:
                 timezone = pytz.timezone(timezone_str)
                 dt = datetime.datetime.utcnow()
-                print "The time in %s is %s" % (timezone_str, dt + timezone.utcoffset(dt))
+                offset = timezone.utcoffset(dt)
+                print "The time in %s is %s (UTC%s)" % (timezone_str, dt + offset, utc_offset_str(offset))
 
             if not options.dupes:
                 break
+
+
+def utc_offset_str(offset):
+    """
+    Show the given time offset as a string in the conventional form for the time part of a UTC offset
+    :rtype: str
+    """
+    assert isinstance(offset, datetime.timedelta)
+    offset_mins = offset.total_seconds() / 60
+    if offset_mins > 0:
+        offset_form = "+%02d:%02d"
+    else:
+        offset_form = "-%02d:%02d"
+        offset_mins = -offset_mins
+    offset_str = offset_form % (offset_mins / 60, offset_mins % 60)
+    return offset_str
 
 
 def load_countries():
